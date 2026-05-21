@@ -1,9 +1,10 @@
 import {createClient} from "@/lib/supabase/server";
 import {NextRequest, NextResponse} from "next/server";
 
-export async function PATCH(req: NextRequest, {params}: {params: {id: string}}) {
+export async function PATCH(req: NextRequest, {params}: {params: Promise<{id: string}>}) {
   try {
     const supabase = await createClient();
+    const {id} = await params;
     const {
       data: {user},
       error: authError,
@@ -19,7 +20,7 @@ export async function PATCH(req: NextRequest, {params}: {params: {id: string}}) 
     const {data: existing, error: findErr} = await supabase
       .from("cards")
       .select("id, status")
-      .eq("id", params.id)
+      .eq("id", id)
       .eq("user_id", user.id)
       .single();
 
@@ -38,7 +39,7 @@ export async function PATCH(req: NextRequest, {params}: {params: {id: string}}) 
     const {data: card, error: updateErr} = await supabase
       .from("cards")
       .update(updates)
-      .eq("id", params.id)
+      .eq("id", id)
       .select()
       .single();
 
@@ -68,9 +69,10 @@ export async function PATCH(req: NextRequest, {params}: {params: {id: string}}) 
   }
 }
 
-export async function DELETE(_req: NextRequest, {params}: {params: {id: string}}) {
+export async function DELETE(_req: NextRequest, {params}: {params: Promise<{id: string}>}) {
   try {
     const supabase = await createClient();
+    const {id} = await params;
     const {
       data: {user},
       error: authError,
@@ -82,7 +84,7 @@ export async function DELETE(_req: NextRequest, {params}: {params: {id: string}}
     const {error} = await supabase
       .from("cards")
       .update({status: "cancelled"})
-      .eq("id", params.id)
+      .eq("id", id)
       .eq("user_id", user.id);
 
     if (error) throw error;
