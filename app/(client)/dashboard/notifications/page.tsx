@@ -55,7 +55,7 @@ export default function NotificationsPage() {
         </div>
         <div className="flex flex-col md:flex items-center gap-2">
           {unreadCount > 0 && (
-            <Button variant="outline" size="sm" onClick={markAllRead}>
+            <Button variant="outline" size="sm" onClick={() => markAllRead}>
               <CheckCheck className="mr-2 h-4 w-4" />
               Mark all read
             </Button>
@@ -65,7 +65,7 @@ export default function NotificationsPage() {
               variant="outline"
               size="sm"
               className="text-muted-foreground"
-              onClick={deleteAll}>
+              onClick={() => deleteAll}>
               <Trash2 className="mr-2 h-4 w-4" />
               Clear all
             </Button>

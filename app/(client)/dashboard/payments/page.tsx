@@ -2,11 +2,12 @@
 
 import {BillForm} from "@/components/dashboard/bill-form";
 import {BillHistory} from "@/components/dashboard/bill-history";
-import {BillPayment, useBillHistory} from "@/lib/hooks/use-bills";
 import {StatsCard} from "@/components/dashboard/stats-card";
 import {Receipt, Clock, CheckCircle2, TrendingDown} from "lucide-react";
 import {useMemo, useState} from "react";
 import {BillDetailDialog} from "@/components/dashboard/bill-detail-dialog";
+import {useBillHistory} from "@/lib/hooks/use-bills";
+import {BillPayment} from "@/types/database";
 
 export default function PaymentsPage() {
   const {bills} = useBillHistory();

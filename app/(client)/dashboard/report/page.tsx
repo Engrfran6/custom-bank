@@ -22,7 +22,6 @@ import {
 } from "lucide-react";
 import {cn} from "@/lib/utils/utils";
 import {useReports} from "@/lib/hooks/use-reports";
-import {useProfile} from "@/lib/hooks/use-profile";
 
 const reportCategories = [
   {
@@ -102,10 +101,9 @@ const reportCategories = [
 export default function ReportPage() {
   const [showForm, setShowForm] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("fraud");
-  const {reports, loading, submitReport} = useReports();
-  const [submitting, setSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const {reports, loading, error, submitReport} = useReports();
+
   const [newReport, setNewReport] = useState({
     category: "fraud" as string,
     description: "",
@@ -116,59 +114,6 @@ export default function ReportPage() {
   });
 
   const [attachments, setAttachments] = useState<File[]>([]);
-  const {user} = useProfile();
-
-  const handleSubmitReport = async () => {
-    // Fix validation logic
-    if (!user) {
-      setSubmitError("You must be logged in to submit a report");
-      return;
-    }
-
-    if (!newReport.description || !newReport.dateOccurred) {
-      setSubmitError("Please fill in all required fields");
-      return;
-    }
-
-    setSubmitting(true);
-    setSubmitError(null);
-
-    const {error} = await submitReport({
-      category: selectedCategory,
-      description: newReport.description,
-      amount: newReport.amount ? parseFloat(newReport.amount) : undefined,
-      transaction_id: newReport.transactionId || undefined,
-      date_occurred: newReport.dateOccurred,
-      urgent_contact: newReport.urgentContact,
-    });
-
-    setSubmitting(false);
-
-    if (error) {
-      setSubmitError(error);
-      return;
-    }
-
-    // Success - reset form
-    setSubmitSuccess(true);
-    setNewReport({
-      category: "fraud",
-      description: "",
-      amount: "",
-      transactionId: "",
-      dateOccurred: "",
-      urgentContact: false,
-    });
-    setAttachments([]);
-
-    // Don't call notify.reportReceived here - it should be handled server-side
-    // or you need to implement it properly
-
-    setTimeout(() => {
-      setSubmitSuccess(false);
-      setShowForm(false);
-    }, 2000);
-  };
 
   const getUrgencyColor = (urgency: string) => {
     if (urgency === "Urgent") return "bg-red-500/10 text-red-600";
@@ -286,7 +231,7 @@ export default function ReportPage() {
       {/* Report Form */}
       {showForm && (
         <div className="rounded-lg border border-border bg-card overflow-hidden">
-          {submitSuccess ? (
+          {!error ? (
             <div className="flex flex-col items-center p-8 text-center">
               <CheckCircle2 className="h-12 w-12 text-green-500" />
               <h3 className="mt-3 font-semibold">Report Submitted</h3>
@@ -323,9 +268,9 @@ export default function ReportPage() {
               </div>
 
               {/* Error Message */}
-              {submitError && (
+              {error && (
                 <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-3">
-                  <p className="text-sm text-red-600">{submitError}</p>
+                  <p className="text-sm text-red-600">{error}</p>
                 </div>
               )}
 
@@ -450,10 +395,10 @@ export default function ReportPage() {
               </label>
 
               <button
-                onClick={handleSubmitReport}
-                disabled={!newReport.description || !newReport.dateOccurred || submitting}
+                onClick={() => submitReport}
+                disabled={!newReport.description || !newReport.dateOccurred || loading}
                 className="w-full rounded-lg bg-red-500 py-2.5 text-sm font-medium text-white hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed">
-                {submitting ? "Submitting..." : "Submit Report"}
+                {loading ? "Submitting..." : "Submit Report"}
               </button>
             </div>
           )}
