@@ -22,8 +22,7 @@ type Step = "select" | "details" | "confirm" | "processing" | "done";
 export function BillForm() {
   const {accounts} = useAccounts();
   const {billers, loading: billersLoading} = useBillers();
-  const {pay, loading, error, success, reset} = usePayBill();
-  const {reload} = useBillHistory();
+  const {pay, loading, error, reset} = usePayBill();
 
   const [step, setStep] = useState<Step>("select");
   const [selectedBiller, setSelectedBiller] = useState<string>("");
@@ -51,7 +50,6 @@ export function BillForm() {
     });
     if (ok) {
       setStep("done");
-      reload();
     } else setStep("confirm");
   };
 

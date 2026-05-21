@@ -1,5 +1,5 @@
 import {cn} from "@/lib/utils/utils";
-import type {Biller} from "@/lib/hooks/use-bills";
+import {Biller} from "@/types/database";
 
 interface BillerCardProps {
   biller: Biller;

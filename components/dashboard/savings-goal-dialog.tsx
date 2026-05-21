@@ -10,7 +10,7 @@ import {Label} from "../ui/label";
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from "../ui/dialog";
 import {Loader2} from "lucide-react";
 import {toast} from "sonner";
-import {SavingsGoal} from "@/lib/hooks/use-savings-goal";
+import {SavingsGoal} from "@/types/database";
 
 interface SavingsGoalDialogProps {
   open: boolean;

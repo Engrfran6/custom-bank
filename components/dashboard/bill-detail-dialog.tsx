@@ -29,7 +29,7 @@ import {Button} from "@/components/ui/button";
 import {Dialog, DialogContent, DialogTitle, DialogDescription} from "@/components/ui/dialog";
 import {Badge} from "@/components/ui/badge";
 import {Separator} from "@/components/ui/separator";
-import {BillPayment} from "@/lib/hooks/use-bills";
+import {BillPayment} from "@/types/database";
 
 const statusConfig: Record<
   string,
