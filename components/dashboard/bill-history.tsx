@@ -1,10 +1,11 @@
 // components/dashboard/bill-history.tsx
 "use client";
 
-import {BillPayment, useBillHistory} from "@/lib/hooks/use-bills";
+import {useBillHistory} from "@/lib/hooks/use-bills";
 import {TransactionRowSkeleton} from "./skeleton";
 import {cn} from "@/lib/utils/utils";
 import {CheckCircle2, Clock, XCircle, RefreshCw, Receipt} from "lucide-react";
+import {BillPayment} from "@/types/database";
 
 const statusMap = {
   completed: {label: "Paid", icon: CheckCircle2, class: "text-emerald-600 dark:text-emerald-400"},

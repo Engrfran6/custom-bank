@@ -2,9 +2,8 @@
 
 import {BillDetailDialog} from "@/components/dashboard/bill-detail-dialog";
 import {BillHistory} from "@/components/dashboard/bill-history";
-import {BillPayment} from "@/lib/hooks/use-bills";
-import {ChevronRight, Receipt} from "lucide-react";
-import Link from "next/link";
+import {BillPayment} from "@/types/database";
+import {Receipt} from "lucide-react";
 import {useState} from "react";
 
 const BillPaymentHistory = () => {
