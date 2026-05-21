@@ -3,7 +3,7 @@ import {BillDetailDialog} from "../bill-detail-dialog";
 import {BillHistory} from "../bill-history";
 import Link from "next/link";
 import {useState} from "react";
-import {BillPayment} from "@/lib/hooks/use-bills";
+import {BillPayment} from "@/types/database";
 
 interface BillPaymentSectionProps {
   onBillClick?: (bill: BillPayment) => void;
