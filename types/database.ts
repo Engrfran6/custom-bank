@@ -14,11 +14,11 @@ export type TransactionType =
   | "check_deposit"
   | "external_deposit";
 
+export type TransactionDirection = "debit" | "credit";
 export type TransactionStatus = "pending" | "processing" | "completed" | "failed" | "reversed";
 export type EntryType = "debit" | "credit";
 export type CardType = "debit" | "credit";
 export type CardStatus = "active" | "frozen" | "cancelled";
-export type TransactionDirection = "debit" | "credit";
 
 export interface SuspensionDetails {
   is_suspended?: boolean;
@@ -145,6 +145,14 @@ export interface Transaction {
   metadata: Record<string, unknown>;
   created_at: string;
   updated_at: string;
+  from_account?: {
+    account_number: string;
+    account_type: string;
+  };
+  to_account?: {
+    account_number: string;
+    account_type: string;
+  };
 }
 
 export interface Entry {

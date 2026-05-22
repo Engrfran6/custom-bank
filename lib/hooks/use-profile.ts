@@ -1,6 +1,6 @@
 import {useAuthListener} from "./use-auth-listener";
-import {useOffline} from "../context/contexts/offline-context";
-import {useProfileQuery} from "./queries/use-profile-query";
+import {useOffline} from "../context/offline-context";
+import {useProfileQuery} from "../queries/use-profile-query";
 
 export function useProfile() {
   const {user, loading: authLoading} = useAuthListener();

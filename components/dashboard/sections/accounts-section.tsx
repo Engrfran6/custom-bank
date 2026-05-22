@@ -18,6 +18,7 @@ function AccountsSkeleton() {
     <>
       <AccountCardSkeleton />
       <AccountCardSkeleton />
+      <AccountCardSkeleton />
     </>
   );
 }

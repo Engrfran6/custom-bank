@@ -61,7 +61,7 @@ export function AccountCard({
   className,
   transactions = [],
 }: AccountCardProps) {
-  const [hidden, setHidden] = useState(true);
+  const [hidden, setHidden] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);

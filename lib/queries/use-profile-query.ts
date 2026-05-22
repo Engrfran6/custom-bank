@@ -1,8 +1,8 @@
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {useCallback} from "react";
-import {fetchUserProfile} from "../../requests/fetch-user-profile";
-import {useRealtimeProfile} from "../../subscriptions/use-realtime-profile";
 import {Profile} from "@/types/database";
+import {useRealtimeProfile} from "../subscriptions/use-realtime-profile";
+import {fetchUserProfile} from "../requests/fetch-user-profile";
 
 interface UseProfileQueryOptions {
   userId: string | undefined;

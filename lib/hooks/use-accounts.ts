@@ -1,4 +1,4 @@
-import {useAccountsQuery} from "./queries/use-accounts-query";
+import {useAccountsQuery} from "../queries/use-accounts-query";
 import {useAuthListener} from "./use-auth-listener";
 
 export function useAccounts() {

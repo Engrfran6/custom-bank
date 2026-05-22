@@ -2,7 +2,7 @@
 "use client";
 
 import {WifiOff, RefreshCw} from "lucide-react";
-import {useOffline} from "@/lib/context/contexts/offline-context";
+import {useOffline} from "@/lib/context/offline-context";
 import {useState, useEffect} from "react";
 
 export function OfflineIndicator() {

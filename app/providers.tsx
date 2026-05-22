@@ -6,7 +6,7 @@ import {ChatProvider} from "@/lib/context/chat-context";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {useEffect} from "react";
-import {OfflineProvider, useOffline} from "@/lib/context/contexts/offline-context";
+import {OfflineProvider, useOffline} from "@/lib/context/offline-context";
 
 const queryClient = new QueryClient({
   defaultOptions: {

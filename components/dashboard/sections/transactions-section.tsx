@@ -60,9 +60,9 @@ export function TransactionsSection({
           </div>
         ) : (
           <div className="space-y-2">
-            {transactions.slice(0, 8).map((t) => (
+            {transactions.slice(0, 8).map((t, index) => (
               <TransactionRow
-                key={t.id}
+                key={`${t.id}-${t.direction}-${index}`}
                 transaction={t}
                 onClick={() => {
                   setSelected(t);

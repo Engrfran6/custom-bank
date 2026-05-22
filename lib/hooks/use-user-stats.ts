@@ -1,4 +1,4 @@
-import {useUserStatsQuery} from "./queries/use-user-stats-query";
+import {useUserStatsQuery} from "../queries/use-user-stats-query";
 import {useProfile} from "./use-profile";
 
 export function useUserStats() {
