@@ -8,23 +8,17 @@ import {TransactionDetailDialog} from "../transaction-detail-dialog";
 import {Search, ChevronRight} from "lucide-react";
 import Link from "next/link";
 import type {Transaction} from "@/types/database";
+import {TransactionHistory} from "@/lib/mapper/db-transaction-to-user";
 
 interface Props {
-  transactions: Transaction[];
+  transactions: TransactionHistory[];
   loading: boolean;
   searchQuery: string;
   onSearchChange: (q: string) => void;
-  profileId?: string;
 }
 
-export function TransactionsSection({
-  transactions,
-  loading,
-  searchQuery,
-  onSearchChange,
-  profileId,
-}: Props) {
-  const [selected, setSelected] = useState<Transaction | null>(null);
+export function TransactionsSection({transactions, loading, searchQuery, onSearchChange}: Props) {
+  const [selected, setSelected] = useState<TransactionHistory | null>(null);
   const [open, setOpen] = useState(false);
 
   return (
@@ -62,7 +56,7 @@ export function TransactionsSection({
           <div className="space-y-2">
             {transactions.slice(0, 8).map((t, index) => (
               <TransactionRow
-                key={`${t.id}-${t.direction}-${index}`}
+                key={`${t.id}-${t.account_id}-${index}`}
                 transaction={t}
                 onClick={() => {
                   setSelected(t);
@@ -74,12 +68,7 @@ export function TransactionsSection({
         )}
       </div>
 
-      <TransactionDetailDialog
-        transaction={selected}
-        open={open}
-        onOpenChange={setOpen}
-        userId={profileId}
-      />
+      <TransactionDetailDialog transaction={selected} open={open} onOpenChange={setOpen} />
 
       <Link
         href="/dashboard/transactions"

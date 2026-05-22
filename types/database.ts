@@ -145,14 +145,6 @@ export interface Transaction {
   metadata: Record<string, unknown>;
   created_at: string;
   updated_at: string;
-  from_account?: {
-    account_number: string;
-    account_type: string;
-  };
-  to_account?: {
-    account_number: string;
-    account_type: string;
-  };
 }
 
 export interface Entry {
@@ -380,6 +372,29 @@ export interface AccessCode {
 export interface CodeVerifyResult {
   ok: boolean;
   message: string;
+}
+
+export interface UserStats {
+  totalIn: number;
+  totalOut: number;
+  totalTransactions: number;
+  averageTransaction: number;
+  largestTransaction: number;
+  savingsRate: number;
+}
+
+export interface DailyPoint {
+  date: string;
+  volume: number;
+  count: number;
+  income: number;
+  expenses: number;
+}
+
+export interface UserStatsResult {
+  stats: UserStats;
+  dailyChart: DailyPoint[];
+  recentTx: Transaction[];
 }
 
 // export interface Transaction {

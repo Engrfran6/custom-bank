@@ -1,10 +1,10 @@
 import {useTransactionsQuery} from "../queries/use-transactions-query";
+import {useAccounts} from "./use-accounts";
 import {useAuthListener} from "./use-auth-listener";
-import {useUserAccountIds} from "./use-user-accountIds";
 
 export function useTransactions(limit = 10) {
   const {user, loading: authLoading} = useAuthListener();
-  const {accountIds, accountsLoading} = useUserAccountIds(user?.id);
+  const {accountIds, loading} = useAccounts();
   const {transactions, isLoading} = useTransactionsQuery({
     userId: user?.id,
     accountIds,
@@ -14,6 +14,6 @@ export function useTransactions(limit = 10) {
 
   return {
     transactions,
-    loading: authLoading || accountsLoading || isLoading,
+    loading: authLoading || loading || isLoading,
   };
 }

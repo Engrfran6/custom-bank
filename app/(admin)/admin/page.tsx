@@ -3,11 +3,11 @@
 import {useAdminStats} from "@/lib/hooks/use-admin-stats";
 import {AdminStatsCards} from "@/components/admin/admin-stats-cards";
 import {AdminChart} from "@/components/admin/admin-chart";
-import {TransactionRow} from "@/components/dashboard/transaction-row";
 import {TransactionRowSkeleton} from "@/components/dashboard/skeleton";
 import {ArrowLeftRight, BarChart3} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import {AdminTransactionRow} from "@/components/admin/admin-transaction-row";
 
 export default function AdminPage() {
   const {stats, dailyChart, recentTx, loading} = useAdminStats();
@@ -89,7 +89,7 @@ export default function AdminPage() {
               No transactions yet
             </div>
           ) : (
-            recentTx?.slice(0, 5).map((t) => <TransactionRow key={t.id} transaction={t} />)
+            recentTx?.slice(0, 5).map((t) => <AdminTransactionRow key={t.id} transaction={t} />)
           )}
         </div>
       </div>

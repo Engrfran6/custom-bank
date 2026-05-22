@@ -154,7 +154,6 @@ export default function DashboardPage() {
             loading={txLoading}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
-            profileId={profile?.id}
           />
 
           <BillPaymentSection onBillClick={(bill) => console.log("Bill clicked:", bill)} />

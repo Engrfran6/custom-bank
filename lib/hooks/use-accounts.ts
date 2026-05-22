@@ -4,7 +4,7 @@ import {useAuthListener} from "./use-auth-listener";
 export function useAccounts() {
   const {user, loading: authLoading} = useAuthListener();
 
-  const {accounts, isLoading} = useAccountsQuery({
+  const {accounts, accountIds, isLoading} = useAccountsQuery({
     userId: user?.id,
     authLoading,
   });
@@ -14,6 +14,7 @@ export function useAccounts() {
 
   return {
     accounts,
+    accountIds,
     loading: authLoading || isLoading,
     totalBalance,
   };

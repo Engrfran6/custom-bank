@@ -1,7 +1,10 @@
+// queries/use-accounts-query.ts
+
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {useCallback} from "react";
 
 import type {Account} from "@/types/database";
+
 import {useRealtimeAccounts} from "@/lib/subscriptions/use-realtime-accounts";
 import {fetchAccounts} from "@/lib/requests/fetch-accounts";
 
@@ -10,18 +13,19 @@ interface UseAccountsQueryOptions {
   authLoading: boolean;
 }
 
-// queries/use-accounts-query.ts
 export function useAccountsQuery({userId, authLoading}: UseAccountsQueryOptions) {
   const queryClient = useQueryClient();
 
   const {data: accounts = [], isLoading} = useQuery<Account[]>({
     queryKey: ["accounts", userId],
+
     queryFn: () => fetchAccounts(userId!),
+
     enabled: !!userId && !authLoading,
+
     staleTime: 5 * 60 * 1000,
   });
 
-  // ✅ Extract account IDs from the fetched data
   const accountIds = accounts.map((a) => a.id);
 
   const updateCache = useCallback(
@@ -35,6 +39,7 @@ export function useAccountsQuery({userId, authLoading}: UseAccountsQueryOptions)
     onInsert: useCallback(
       (account) => {
         if (account.status !== "active") return;
+
         updateCache((prev) =>
           [...prev, account].sort(
             (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
@@ -45,10 +50,19 @@ export function useAccountsQuery({userId, authLoading}: UseAccountsQueryOptions)
     ),
 
     onUpdate: useCallback(
-      (account) => {
-        updateCache((prev) => prev.map((a) => (a.id === account.id ? account : a)));
+      ({old, new: updated}) => {
+        updateCache((prev) => prev.map((a) => (a.id === updated.id ? updated : a)));
+
+        /**
+         * Revalidate transactions ONLY if balance changed
+         */
+        if (old.balance !== updated.balance) {
+          queryClient.invalidateQueries({
+            queryKey: ["transactions"],
+          });
+        }
       },
-      [updateCache],
+      [queryClient, updateCache],
     ),
 
     onDelete: useCallback(
@@ -59,5 +73,9 @@ export function useAccountsQuery({userId, authLoading}: UseAccountsQueryOptions)
     ),
   });
 
-  return {accounts, isLoading};
+  return {
+    accounts,
+    accountIds,
+    isLoading,
+  };
 }
